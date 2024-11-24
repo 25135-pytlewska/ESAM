@@ -2,3 +2,6 @@ pandas
 numpy
 pytest
 openpyxl
+flask
+werkzeug
+gunicorn
