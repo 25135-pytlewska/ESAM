@@ -118,8 +118,8 @@ class ESAMProcessor:
         df_agg['date'] = pd.to_datetime(df_agg['date'])
         pivot = df_agg.pivot(index='date', columns='reg_number', values='stops')
         
-        full_date_range = pd.date_range(start='2024-09-01', end='2024-09-30', freq='D')
-        pivot = pivot.reindex(full_date_range)
+        # full_date_range = pd.date_range(start='2024-09-01', end='2024-09-30', freq='D')
+        # pivot = pivot.reindex(full_date_range)
         return pivot.fillna(0)
 
     @staticmethod

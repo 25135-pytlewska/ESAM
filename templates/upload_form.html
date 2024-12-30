@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESAM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .upload-container:hover {
+            border-color: #666;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ESAM Uploader</h1>
+    <div class="upload-container">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <br><br>
+            <input type="submit" value="Upload and Process" class="button">
+        </form>
+    </div>
+    {% if error %}
+    <div class="error">
+        {{ error }}
+    </div>
+    {% endif %}
+</body>
+</html>
