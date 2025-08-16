@@ -12,8 +12,9 @@ class ESAMProcessor:
         """Read and initialize the CSV data with standard column names."""
         file_path = self.input_dir / f"{filename}.csv"
         df = pd.read_csv(file_path)
-        return df.set_axis(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', "L", "M", "N", "O"], axis=1)
-
+        # return df.set_axis(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', "L", "M", "N", "O"], axis=1)
+        return df.set_axis(['A'], axis=1)
+        
     def filter_relevant_rows(self, df: pd.DataFrame) -> pd.DataFrame:
         """Filter rows containing specific keywords."""
         keywords = ['Nr rej', 'Data ', 'Razem']
