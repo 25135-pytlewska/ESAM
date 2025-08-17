@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Dict, Union
 from pathlib import Path
+import re
 
 class ESAMProcessor:
     def __init__(self, input_dir: str = "./input"):
@@ -28,6 +29,12 @@ class ESAMProcessor:
             return text.replace("Nr rej. ", "")
         return text
 
+    @staticmethod
+    def extract_date(text: str) -> str | None:
+            text = text.replace("Data", "").strip() 
+            match = re.search(r"\d{2}-\d{2}-\d{2}", text)
+            return match.group(0) if match else None
+
     def process_registration_numbers(self, df: pd.DataFrame) -> pd.DataFrame:
         """Process and clean registration numbers."""
         df = df.copy()
@@ -41,13 +48,7 @@ class ESAMProcessor:
         """Process and extract dates from strings starting with 'Data'."""
         df = df.copy()
         mask = df["A"].str.startswith('Data')
-
-        def extract_date(text: str) -> str | None:
-            text = text.replace("Data", "").strip() 
-            match = re.search(r"\d{2}-\d{2}-\d{2}", text)
-            return match.group(0) if match else None
-
-        df.loc[mask, "date"] = df.loc[mask, "A"].map(extract_date)
+        df.loc[mask, "date"] = df.loc[mask, "A"].map(self.extract_date)
         df["date"] = df["date"].replace("", np.nan)
 
         return df
