@@ -38,11 +38,18 @@ class ESAMProcessor:
         return df
 
     def process_dates(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Process and extract dates."""
+        """Process and extract dates from strings starting with 'Data'."""
         df = df.copy()
         mask = df["A"].str.startswith('Data')
-        df.loc[mask, 'date'] = df.loc[mask, "A"].map(lambda x: x.replace('Data', '').strip())
-        df['date'] = df['date'].replace('', np.nan)
+
+        def extract_date(text: str) -> str | None:
+            text = text.replace("Data", "").strip() 
+            match = re.search(r"\d{2}-\d{2}-\d{2}", text)
+            return match.group(0) if match else None
+
+        df.loc[mask, "date"] = df.loc[mask, "A"].map(extract_date)
+        df["date"] = df["date"].replace("", np.nan)
+
         return df
 
     def process_values(self, df: pd.DataFrame) -> pd.DataFrame:
