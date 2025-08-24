@@ -15,3 +15,6 @@ python3 -m venv .venv
 ```
 pytest
 ```
+
+## Changelog
+2025-08-24 - Instructions added in template > upload_form.html file
